@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Runs the plugin's tests in headless Neovim (plenary busted), never against the real journal.
+set -euo pipefail
+cd "$(dirname "$0")/.."
+unset JOURNAL_DIR
+exec nvim --headless --noplugin -u tests/minimal_init.lua \
+  -c "PlenaryBustedDirectory ${1:-tests} { minimal_init = 'tests/minimal_init.lua', sequential = true }"
