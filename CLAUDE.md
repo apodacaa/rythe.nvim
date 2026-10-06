@@ -31,7 +31,7 @@ cross-editor or other-user concern.
 ```
 lua/journal/init.lua      setup(opts), keymaps, which-key group
 lua/journal/cli.lua       run `journal` via vim.system, decode JSON, errors
-lua/journal/buffers.lua   journal://new and journal://<id> buffers          (M1)
+lua/journal/buffers.lua   journal://new and journal://<id> buffers (BufReadCmd/BufWriteCmd)
 lua/journal/pickers.lua   snacks picker sources                             (M1, M2)
 lua/journal/read.lua      read-only buffer rendering a stretch of entries   (M3)
 tests/                    plenary busted specs, run headless
@@ -44,6 +44,11 @@ bin/test                  runs the tests
 in headless Neovim with plenary. Each spec points `JOURNAL_DIR` at a fresh temp folder and seeds
 it with `journal new --at … --text …`. **Never run tests against the real journal**:
 `tests/helpers.lua` refuses to work unless `JOURNAL_DIR` is under the system temp folder.
+Specs that expect an error call `helpers.capture_notify()` first: headless Neovim's default
+`vim.notify` raises on ERROR, which LazyVim's notifier doesn't.
+
+The tests run the installed `journal`, which is an editable `uv tool` install of `~/Work/journal`:
+it runs whatever branch is checked out there. Keep that repo on `main` when not working in it.
 
 ## Working here
 

@@ -35,14 +35,23 @@ Everything is under the `<leader>j` which-key group "journal".
 
 | Key | Does | Status |
 |---|---|---|
-| `<leader>jj` | new entry; `:w` saves it | M1 |
-| `<leader>jf` | find an entry (picker with preview) | M1 |
+| `<leader>jj` | new entry; `:w` saves it | ✓ |
+| `<leader>jf` | find an entry (picker with preview) | ✓ |
 | `<leader>js` | search text | M2 |
 | `<leader>jt` | tags, then their entries | M2 |
 | `<leader>jo` | on this day | M2 |
 | `<leader>jr` | read the last week | M3 |
 | `<leader>jp` | new entry with a writing prompt | M3 |
 | `<leader>jR` | weekly review | M3 |
+
+## Journal buffers
+
+An entry opens as `journal://<id>` and a new one as `journal://new`. They're ordinary buffers:
+`:w` sends the text to `journal edit <id> --stdin` (or `journal new` for a new one, after which
+the buffer is renamed to the new id), and `:e!` reloads from the CLI. You can also
+`:e journal://<id>` directly. Only the body is in the buffer, never the frontmatter. Writing an
+empty buffer is refused by the CLI and the buffer stays modified. `<leader>jj` returns to an
+unsaved `journal://new` draft if there is one.
 
 ## Tests
 
