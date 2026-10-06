@@ -52,8 +52,11 @@ it runs whatever branch is checked out there. Keep that repo on `main` when not 
 
 ## Working here
 
-- Git: local only, no remote. One branch per milestone (`m0-scaffold`, `m1-write-find`, …), and
-  the user decides when to merge. Don't commit straight to `main`.
+- Git: GitHub `apodacaa/journal-nvim-plugin` (private). Work lands on `main` through a PR: one
+  branch per milestone (`m2-search-tags`, …), push, `gh pr create`. The user decides when to
+  merge. Don't commit straight to `main`. The journal CLI repo (`~/Work/journal`) is still local
+  only, so a CLI fix there is a local branch the user merges, and it merges before the plugin PR
+  that needs it.
 - Changes to `~/.config/nvim` are logged in `~/Work/omarchy/changes.md` (newest first, What /
   Why / Undo), via a branch and PR in the omarchy repo.
 - Milestones: M0 scaffold; M1 write and find (`<leader>jj`, `<leader>jf`); M2 search, tags, on
