@@ -3,3 +3,5 @@ vim.opt.rtp:prepend(root)
 vim.opt.rtp:prepend(vim.fn.stdpath("data") .. "/lazy/plenary.nvim")
 vim.cmd("runtime plugin/plenary.vim")
 vim.opt.swapfile = false
+vim.opt.rtp:prepend(vim.fn.stdpath("data") .. "/lazy/snacks.nvim")
+require("snacks").setup({ picker = { enabled = true } })

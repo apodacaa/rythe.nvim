@@ -11,6 +11,15 @@ function M.temp_journal()
   return dir
 end
 
+-- Collects vim.notify calls (headless Neovim raises on ERROR otherwise). Returns the list.
+function M.capture_notify()
+  local seen = {}
+  vim.notify = function(msg, level)
+    table.insert(seen, { msg = msg, level = level })
+  end
+  return seen
+end
+
 -- Seeds an entry through the CLI and returns its id.
 function M.seed(at, text)
   assert(vim.env.JOURNAL_DIR, "call temp_journal() first")
