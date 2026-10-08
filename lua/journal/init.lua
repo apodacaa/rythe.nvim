@@ -23,6 +23,15 @@ function M.setup(opts)
   map("<leader>jf", function()
     require("journal.pickers").entries()
   end, "Find Entry")
+  map("<leader>js", function()
+    require("journal.pickers").search()
+  end, "Search Entries")
+  map("<leader>jt", function()
+    require("journal.pickers").tags()
+  end, "Tags")
+  map("<leader>jo", function()
+    require("journal.pickers").on_this_day()
+  end, "On This Day")
 end
 
 return M
