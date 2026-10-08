@@ -40,9 +40,9 @@ Everything is under the `<leader>j` which-key group "journal".
 | `<leader>js` | search text | ✓ |
 | `<leader>jt` | tags, then their entries | ✓ |
 | `<leader>jo` | on this day | ✓ |
-| `<leader>jr` | read the last week | M3 |
-| `<leader>jp` | new entry with a writing prompt | M3 |
-| `<leader>jR` | weekly review | M3 |
+| `<leader>jr` | read the last week | ✓ |
+| `<leader>jp` | new entry with a writing prompt | ✓ |
+| `<leader>jR` | weekly review | ✓ |
 
 ## Journal buffers
 
@@ -66,6 +66,19 @@ to open it. Turn it off with `journal config set resurface.enabled false`.
   search register, so `n` and `N` move between matches.
 - `<leader>jt`: tags with counts, most used first. Choosing one lists its entries.
 - `<leader>jo`: entries written on today's date in earlier years.
+
+## Reflect
+
+- `<leader>jr`: the last seven days in one read-only markdown buffer, oldest first. `<CR>` on an
+  entry opens it for editing (`<C-o>` comes back); `q` closes.
+- `<leader>jp`: pick a prompt set (`today` first), then write a new entry with that set's prompt
+  for today shown above the text. The prompt is virtual text: it is never saved, and it goes
+  away once the entry is saved. The choice of prompt is the CLI's (`journal prompts pick`), so
+  it matches `journal new --prompt`.
+- `<leader>jR`: the weekly review. The period (past `#review` entries left out) is shown above,
+  and a `journal://review` buffer below with the title ("Week of …") and the reflection
+  questions above the text. `:w` saves it through `journal review --stdin`, titled and tagged
+  `#review`, like `journal review` does on the terminal.
 
 ## Tests
 

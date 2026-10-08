@@ -23,6 +23,8 @@ cross-editor or other-user concern.
   set `spellcapcheck=""` and `vim.b.completion = false` themselves. The `journal_no_capcheck`
   autocmd in `~/.config/nvim/lua/config/autocmds.lua` only matches real files, not `journal://`
   names.
+- **Prompts and review titles are virtual lines** (extmarks above line 1), never buffer text, so
+  they can't be saved by accident. Which prompt to show is the CLI's choice (`prompts pick`).
 - **Keymaps live in the plugin** (`setup()` in `lua/journal/init.lua`), under the `<leader>j`
   which-key group. The spec in `~/.config/nvim/lua/plugins/journal.lua` only loads it.
 
@@ -31,9 +33,9 @@ cross-editor or other-user concern.
 ```
 lua/journal/init.lua      setup(opts), keymaps, which-key group
 lua/journal/cli.lua       run `journal` via vim.system, decode JSON, errors
-lua/journal/buffers.lua   journal://new and journal://<id> buffers (BufReadCmd/BufWriteCmd)
+lua/journal/buffers.lua   journal://new, journal://review, journal://<id> buffers; prompt guide
 lua/journal/pickers.lua   snacks pickers: entries, search, tags, on this day
-lua/journal/read.lua      read-only buffer rendering a stretch of entries   (M3)
+lua/journal/read.lua      read-only buffer rendering a stretch of entries; weekly review
 tests/                    plenary busted specs, run headless
 bin/test                  runs the tests
 ```

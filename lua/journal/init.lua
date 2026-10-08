@@ -32,6 +32,15 @@ function M.setup(opts)
   map("<leader>jo", function()
     require("journal.pickers").on_this_day()
   end, "On This Day")
+  map("<leader>jr", function()
+    require("journal.read").week()
+  end, "Read the Week")
+  map("<leader>jp", function()
+    require("journal.pickers").prompt()
+  end, "New Entry with a Prompt")
+  map("<leader>jR", function()
+    require("journal.read").review()
+  end, "Weekly Review")
 end
 
 return M
