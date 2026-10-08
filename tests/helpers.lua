@@ -14,8 +14,8 @@ end
 -- Collects vim.notify calls (headless Neovim raises on ERROR otherwise). Returns the list.
 function M.capture_notify()
   local seen = {}
-  vim.notify = function(msg, level)
-    table.insert(seen, { msg = msg, level = level })
+  vim.notify = function(msg, level, opts)
+    table.insert(seen, { msg = msg, level = level, opts = opts or {} })
   end
   return seen
 end

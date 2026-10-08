@@ -72,6 +72,34 @@ local function write(ev)
   end
   vim.bo[buf].modified = false
   vim.notify("saved " .. entry.id, vim.log.levels.INFO, { title = "journal" })
+  if entry.resurfaced then
+    M.show_resurfaced(entry.resurfaced)
+  end
+end
+
+-- The older entry `journal new` picks after a save (as on the terminal): the first few lines
+-- and how to open it.
+function M.show_resurfaced(resurfaced)
+  local old = resurfaced.entry
+  local lines = {}
+  if old.title ~= "" then
+    lines[1] = old.title
+  end
+  for line in old.body:gmatch("[^\n]+") do
+    if #lines == 3 then
+      lines[#lines + 1] = "…"
+      break
+    end
+    if line:match("%S") then
+      lines[#lines + 1] = vim.trim(line)
+    end
+  end
+  lines[#lines + 1] = ""
+  lines[#lines + 1] = ":e " .. PREFIX .. old.id
+  vim.notify(table.concat(lines, "\n"), vim.log.levels.INFO, {
+    title = "journal: " .. resurfaced.label,
+    timeout = 10000,
+  })
 end
 
 function M.setup()
