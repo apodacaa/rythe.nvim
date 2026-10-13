@@ -4,6 +4,9 @@ The journal from inside LazyVim: a which-key `<leader>j` menu, snacks pickers an
 of a separate TUI. It's for the user only (this Neovim, this machine), so there's no
 cross-editor or other-user concern.
 
+This repo lives in the `~/Work/journal` hub as `nvim/`, beside the CLI in `cli/`. The hub's
+`CLAUDE.md` has the rules that span both.
+
 ## Design rules
 
 - **The `journal` CLI is the app; this plugin is a client of it**, like the `journal-sweep`
@@ -14,7 +17,7 @@ cross-editor or other-user concern.
   shapes into this repo's docs. Refs are an id, `last`, `today` or a unique prefix. Exit codes:
   0 ok, 1 usage, 2 not found, 3 duplicate. Errors come on stderr as `journal: …`.
 - **A CLI gap gets fixed in the CLI.** If the plugin needs something the CLI doesn't give (a
-  missing JSON field, a missing flag), add it in `~/Work/journal` on its own branch with tests.
+  missing JSON field, a missing flag), add it in `~/Work/journal/cli` on its own branch with tests.
   Don't work around it in Lua.
 - **All CLI calls go through `lua/journal/cli.lua`**, which runs `vim.system`, decodes the JSON and
   turns a non-zero exit into an error (`vim.notify` at the call site).
@@ -49,14 +52,14 @@ it with `journal new --at … --text …`. **Never run tests against the real jo
 Specs that expect an error call `helpers.capture_notify()` first: headless Neovim's default
 `vim.notify` raises on ERROR, which LazyVim's notifier doesn't.
 
-The tests run the installed `journal`, which is an editable `uv tool` install of `~/Work/journal`:
+The tests run the installed `journal`, which is an editable `uv tool` install of `~/Work/journal/cli`:
 it runs whatever branch is checked out there. Keep that repo on `main` when not working in it.
 
 ## Working here
 
 - Git: GitHub `apodacaa/journal-nvim-plugin` (private). Work lands on `main` through a PR: one
   branch per milestone (`m2-search-tags`, …), push, `gh pr create`. The user decides when to
-  merge. Don't commit straight to `main`. A CLI fix goes to the journal repo (`~/Work/journal`,
+  merge. Don't commit straight to `main`. A CLI fix goes to the journal repo (`~/Work/journal/cli`,
   GitHub, also PRs) as its own PR, and it merges before the plugin PR that needs it.
 - Changes to `~/.config/nvim` are logged in `~/Work/omarchy/changes.md` (newest first, What /
   Why / Undo), via a branch and PR in the omarchy repo.

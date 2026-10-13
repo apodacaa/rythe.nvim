@@ -9,7 +9,7 @@ CLI (`journal … --json`). The plugin never reads or writes the data folder its
 -- ~/.config/nvim/lua/plugins/journal.lua
 return {
   {
-    dir = "~/Work/journal.nvim",
+    dir = "~/Work/journal/nvim",
     name = "journal.nvim",
     dependencies = { "folke/snacks.nvim" },
     event = "VeryLazy",
