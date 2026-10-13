@@ -145,6 +145,51 @@ function M.tags()
   })
 end
 
+-- Prompt sets with their descriptions; choosing one opens a new entry with today's prompt from
+-- that set (the CLI's choice) shown above the text.
+function M.prompt()
+  local sets = run({ "prompts", "list" })
+  if not sets then
+    return
+  end
+  -- `today` is the CLI's default set, so it comes first.
+  table.sort(sets, function(a, b)
+    if (a.name == "today") ~= (b.name == "today") then
+      return a.name == "today"
+    end
+    return a.name < b.name
+  end)
+  local items = {}
+  for i, set in ipairs(sets) do
+    items[i] = {
+      idx = i,
+      text = set.name,
+      name = set.name,
+      source = set.source,
+      preview = { text = set.description, ft = "markdown" },
+    }
+  end
+  return Snacks.picker.pick({
+    title = "Journal prompts",
+    items = items,
+    format = function(item)
+      return { { item.name, "SnacksPickerLabel" }, { "  " .. item.source, "SnacksPickerComment" } }
+    end,
+    preview = "preview",
+    win = { preview = { wo = { wrap = true, linebreak = true } } },
+    confirm = function(picker, item)
+      picker:close()
+      if not item then
+        return
+      end
+      local picked = run({ "prompts", "pick", item.name })
+      if picked then
+        require("journal.buffers").new(picked.prompt)
+      end
+    end,
+  })
+end
+
 function M.search_items(results)
   local items = {}
   for i, result in ipairs(results) do
