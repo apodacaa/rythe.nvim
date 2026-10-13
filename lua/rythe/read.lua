@@ -1,9 +1,9 @@
 -- A read-only markdown buffer showing a stretch of entries, oldest first.
-local cli = require("journal.cli")
+local cli = require("rythe.cli")
 
 local M = {}
 
-local PREFIX = "journal-read://"
+local PREFIX = "rythe-read://"
 
 -- "## Thu Oct 2, 2026 · 09:00 · Title"
 local function heading(entry)
@@ -46,12 +46,12 @@ function M.show(entries, title)
   vim.bo[buf].modifiable = false
   vim.bo[buf].bufhidden = "hide" -- so <C-o> after <CR> comes back to it
   vim.bo[buf].filetype = "markdown"
-  vim.b[buf].journal_starts = starts
+  vim.b[buf].rythe_starts = starts
 
   vim.keymap.set("n", "<CR>", function()
     local id = M.entry_at(buf, vim.fn.line("."))
     if id then
-      require("journal.buffers").open(id)
+      require("rythe.buffers").open(id)
     end
   end, { buffer = buf, desc = "Open Entry" })
   vim.keymap.set("n", "q", "<cmd>bdelete<cr>", { buffer = buf, desc = "Close" })
@@ -63,7 +63,7 @@ end
 -- The id of the entry whose text is at `lnum`, or nil above the first entry.
 function M.entry_at(buf, lnum)
   local id
-  for _, start in ipairs(vim.b[buf].journal_starts or {}) do
+  for _, start in ipairs(vim.b[buf].rythe_starts or {}) do
     if start.line > lnum then
       break
     end
@@ -82,7 +82,7 @@ function M.week()
   return M.show(vim.fn.reverse(entries), "The last 7 days")
 end
 
--- The weekly review: the period above, the reflection below (`journal review --json`).
+-- The weekly review: the period above, the reflection below (`rythe review --json`).
 function M.review()
   local plan, err = cli.json({ "review" })
   if not plan then
@@ -90,7 +90,7 @@ function M.review()
   end
   M.show(plan.entries, plan.title)
   vim.cmd("belowright split")
-  require("journal.buffers").review(plan)
+  require("rythe.buffers").review(plan)
 end
 
 return M

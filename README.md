@@ -1,19 +1,19 @@
-# journal.nvim
+# rythe.nvim
 
-Write, find and reread the `journal` from inside Neovim (built for LazyVim). Everything goes through the `journal`
-CLI (`journal … --json`). The plugin never reads or writes the data folder itself.
+Write, find and reread your journal from inside Neovim (built for LazyVim). Everything goes
+through the `rythe` CLI (`rythe … --json`). The plugin never reads or writes the data folder itself.
 
 [CHANGELOG.md](CHANGELOG.md) lists what changed in each version.
 
 ## Requirements
 
 - Neovim 0.10 or later.
-- The [`journal`](https://github.com/apodacaa/journal) CLI, 0.1.0 or later, on your PATH. The
+- The [`rythe`](https://github.com/apodacaa/rythe) CLI, 0.2.0 or later, on your PATH. The
   plugin is only a view of it: the CLI is the journal, and it is not installed with the plugin.
   With [uv](https://docs.astral.sh/uv/):
 
   ```
-  uv tool install git+https://github.com/apodacaa/journal
+  uv tool install git+https://github.com/apodacaa/rythe
   ```
 
 - [snacks.nvim](https://github.com/folke/snacks.nvim) with its picker enabled, for finding,
@@ -22,19 +22,17 @@ CLI (`journal … --json`). The plugin never reads or writes the data folder its
   and a markdown renderer such as render-markdown.nvim styles the entries, which are markdown
   buffers.
 
-Without the CLI every key answers "the journal CLI isn't installed".
+Without the CLI every key answers "the rythe CLI isn't installed".
 
 ## Install
 
 With [lazy.nvim](https://github.com/folke/lazy.nvim):
 
 ```lua
--- ~/.config/nvim/lua/plugins/journal.lua
+-- ~/.config/nvim/lua/plugins/rythe.lua
 return {
   {
-    "apodacaa/journal-nvim-plugin",
-    name = "journal.nvim",
-    main = "journal",
+    "apodacaa/rythe.nvim",
     dependencies = { "folke/snacks.nvim" },
     event = "VeryLazy",
     opts = {},
@@ -48,12 +46,12 @@ Options (defaults shown):
 
 ```lua
 opts = {
-  cmd = "journal", -- the journal CLI to run
+  cmd = "rythe", -- the rythe CLI to run
 }
 ```
 
-Point it at another journal the same way the CLI does, with `JOURNAL_DIR` or
-`journal config set storage.dir`.
+Point it at another journal the same way the CLI does, with `RYTHE_DIR` or
+`rythe config set storage.dir`.
 
 ## Keys
 
@@ -72,16 +70,16 @@ Everything is under the `<leader>j` which-key group "journal".
 
 ## Journal buffers
 
-An entry opens as `journal://<id>` and a new one as `journal://new`. They're ordinary buffers:
-`:w` sends the text to `journal edit <id> --stdin` (or `journal new` for a new one, after which
+An entry opens as `rythe://<id>` and a new one as `rythe://new`. They're ordinary buffers:
+`:w` sends the text to `rythe edit <id> --stdin` (or `rythe new` for a new one, after which
 the buffer is renamed to the new id), and `:e!` reloads from the CLI. You can also
-`:e journal://<id>` directly. Only the body is in the buffer, never the frontmatter. Writing an
+`:e rythe://<id>` directly. Only the body is in the buffer, never the frontmatter. Writing an
 empty buffer is refused by the CLI and the buffer stays modified. `<leader>jj` returns to an
-unsaved `journal://new` draft if there is one.
+unsaved `rythe://new` draft if there is one.
 
 After saving a new entry you get the same reminder as on the terminal: a notification with one
-older entry (same day in a past year, else a month ago, else a week ago) and `:e journal://<id>`
-to open it. Turn it off with `journal config set resurface.enabled false`.
+older entry (same day in a past year, else a month ago, else a week ago) and `:e rythe://<id>`
+to open it. Turn it off with `rythe config set resurface.enabled false`.
 
 ## Pickers
 
@@ -99,12 +97,12 @@ to open it. Turn it off with `journal config set resurface.enabled false`.
   entry opens it for editing (`<C-o>` comes back); `q` closes.
 - `<leader>jp`: pick a prompt set (`today` first), then write a new entry with that set's prompt
   for today shown above the text. The prompt is virtual text: it is never saved, and it goes
-  away once the entry is saved. The choice of prompt is the CLI's (`journal prompts pick`), so
-  it matches `journal new --prompt`.
+  away once the entry is saved. The choice of prompt is the CLI's (`rythe prompts pick`), so
+  it matches `rythe new --prompt`.
 - `<leader>jR`: the weekly review. The period (past `#review` entries left out) is shown above,
-  and a `journal://review` buffer below with the title ("Week of …") and the reflection
-  questions above the text. `:w` saves it through `journal review --stdin`, titled and tagged
-  `#review`, like `journal review` does on the terminal.
+  and a `rythe://review` buffer below with the title ("Week of …") and the reflection
+  questions above the text. `:w` saves it through `rythe review --stdin`, titled and tagged
+  `#review`, like `rythe review` does on the terminal.
 
 ## Tests
 
@@ -113,7 +111,7 @@ bin/test            # all specs
 bin/test tests/cli_spec.lua
 ```
 
-They run headless against a temp `JOURNAL_DIR`, never the real journal.
+They run headless against a temp `RYTHE_DIR`, never the real journal.
 
 ## Licence
 

@@ -9,8 +9,8 @@ fail() {
   exit 1
 }
 
-version=$(sed -n 's/^M.version = "\(.*\)"$/\1/p' lua/journal/init.lua)
-[[ -n $version ]] || fail "no version found in lua/journal/init.lua"
+version=$(sed -n 's/^M.version = "\(.*\)"$/\1/p' lua/rythe/init.lua)
+[[ -n $version ]] || fail "no version found in lua/rythe/init.lua"
 tag="v$version"
 
 [[ $(git branch --show-current) == main ]] || fail "not on main"
