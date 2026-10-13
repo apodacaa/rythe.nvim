@@ -1,8 +1,9 @@
 # journal.nvim
 
 The journal from inside LazyVim: a which-key `<leader>j` menu, snacks pickers and buffers instead
-of a separate TUI. It's for the user only (this Neovim, this machine), so there's no
-cross-editor or other-user concern.
+of a separate TUI. It started as the user's own and is headed for public release, so it has to
+work in someone else's Neovim: lazy.nvim, snacks.nvim for the pickers, which-key optional. Nothing
+may depend on this machine's `~/.config/nvim`. Other editors are not a concern.
 
 This repo lives in the `~/Work/journal` hub as `nvim/`, beside the CLI in `cli/`. The hub's
 `CLAUDE.md` has the rules that span both.

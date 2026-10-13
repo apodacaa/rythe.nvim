@@ -1,7 +1,7 @@
 local M = {}
 
 -- Bumped together with CHANGELOG.md; `bin/release` tags it.
-M.version = "0.1.0"
+M.version = "0.1.1"
 
 M.config = {
   -- the journal CLI to run

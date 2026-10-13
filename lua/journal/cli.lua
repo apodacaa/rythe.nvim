@@ -10,6 +10,11 @@ function M.json(args, opts)
   vim.list_extend(cmd, args)
   table.insert(cmd, "--json")
 
+  -- Checked first so a missing CLI gets a plain sentence, not vim.system's ENOENT trace.
+  if vim.fn.executable(cmd[1]) == 0 then
+    return nil, { code = -1, message = "the journal CLI isn't installed: no `" .. cmd[1] .. "` on your PATH" }
+  end
+
   local ok, proc = pcall(vim.system, cmd, { text = true, stdin = opts.stdin })
   if not ok then
     return nil, { code = -1, message = "can't run " .. cmd[1] .. ": " .. tostring(proc) }
