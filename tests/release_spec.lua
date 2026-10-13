@@ -1,6 +1,6 @@
 -- The plugin's version and the changelog move together, so a release always has its notes.
 describe("release", function()
-  local version = require("journal").version
+  local version = require("rythe").version
 
   it("has a version of three numbers", function()
     assert.is_truthy(version:match("^%d+%.%d+%.%d+$"))

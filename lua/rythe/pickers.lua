@@ -1,5 +1,5 @@
 -- snacks pickers over CLI results.
-local cli = require("journal.cli")
+local cli = require("rythe.cli")
 
 local M = {}
 
@@ -54,12 +54,12 @@ end
 local function open_entry(picker, item)
   picker:close()
   if item then
-    require("journal.buffers").open(item.entry.id)
+    require("rythe.buffers").open(item.entry.id)
   end
 end
 
 local function info(msg)
-  vim.notify(msg, vim.log.levels.INFO, { title = "journal" })
+  vim.notify(msg, vim.log.levels.INFO, { title = "rythe" })
 end
 
 -- A picker over entry objects, or a note when there are none.
@@ -184,7 +184,7 @@ function M.prompt()
       end
       local picked = run({ "prompts", "pick", item.name })
       if picked then
-        require("journal.buffers").new(picked.prompt)
+        require("rythe.buffers").new(picked.prompt)
       end
     end,
   })
@@ -208,7 +208,7 @@ function M.search_items(results)
   return items
 end
 
--- search --json has no body, so the preview asks `journal show` once per entry.
+-- search --json has no body, so the preview asks `rythe show` once per entry.
 local function preview_body(cache)
   return function(ctx)
     local item = ctx.item
@@ -251,7 +251,7 @@ function M.search(query)
     preview = preview_body({}),
     confirm = function(picker, item)
       picker:close()
-      if item and require("journal.buffers").open(item.id) then
+      if item and require("rythe.buffers").open(item.id) then
         vim.fn.setreg("/", "\\V\\c" .. vim.fn.escape(query, "\\"))
         vim.fn.search(vim.fn.getreg("/"), "cw")
       end

@@ -1,10 +1,10 @@
--- journal://new, journal://review and journal://<id> buffers. Reading and writing go through
+-- rythe://new, rythe://review and rythe://<id> buffers. Reading and writing go through
 -- the CLI.
-local cli = require("journal.cli")
+local cli = require("rythe.cli")
 
 local M = {}
 
-local PREFIX = "journal://"
+local PREFIX = "rythe://"
 
 -- Buffers that create an entry on :w, and the command that does it (text on stdin).
 local CREATE = {
@@ -13,7 +13,7 @@ local CREATE = {
 }
 
 -- Prompts and titles shown above the text as virtual lines: never part of the buffer, never saved.
-local guide_ns = vim.api.nvim_create_namespace("journal_guide")
+local guide_ns = vim.api.nvim_create_namespace("rythe_guide")
 
 -- Entries already fetched by open(), handed to the BufReadCmd so it doesn't ask twice.
 local fetched = {}
@@ -78,13 +78,13 @@ local function write(ev)
     end
   end
   vim.bo[buf].modified = false
-  vim.notify("saved " .. entry.id, vim.log.levels.INFO, { title = "journal" })
+  vim.notify("saved " .. entry.id, vim.log.levels.INFO, { title = "rythe" })
   if entry.resurfaced then
     M.show_resurfaced(entry.resurfaced)
   end
 end
 
--- The older entry `journal new` picks after a save (as on the terminal): the first few lines
+-- The older entry `rythe new` picks after a save (as on the terminal): the first few lines
 -- and how to open it.
 function M.show_resurfaced(resurfaced)
   local old = resurfaced.entry
@@ -104,13 +104,13 @@ function M.show_resurfaced(resurfaced)
   lines[#lines + 1] = ""
   lines[#lines + 1] = ":e " .. PREFIX .. old.id
   vim.notify(table.concat(lines, "\n"), vim.log.levels.INFO, {
-    title = "journal: " .. resurfaced.label,
+    title = "rythe: " .. resurfaced.label,
     timeout = 10000,
   })
 end
 
 function M.setup()
-  local group = vim.api.nvim_create_augroup("journal_buffers", { clear = true })
+  local group = vim.api.nvim_create_augroup("rythe_buffers", { clear = true })
   vim.api.nvim_create_autocmd("BufReadCmd", { group = group, pattern = PREFIX .. "*", callback = read })
   vim.api.nvim_create_autocmd("BufWriteCmd", { group = group, pattern = PREFIX .. "*", callback = write })
 end
@@ -173,8 +173,8 @@ function M.new(prompt)
   end
 end
 
--- The reflection for `plan` (from `journal review --json`): its title and question shown above
--- the text; :w saves it through `journal review --stdin` (titled, tagged #review).
+-- The reflection for `plan` (from `rythe review --json`): its title and question shown above
+-- the text; :w saves it through `rythe review --stdin` (titled, tagged #review).
 function M.review(plan)
   vim.cmd.edit(vim.fn.fnameescape(PREFIX .. "review"))
   set_guide(plan.title, plan.prompt)
