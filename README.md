@@ -3,6 +3,9 @@
 Write, find and reread the `journal` from inside LazyVim. Everything goes through the `journal`
 CLI (`journal … --json`). The plugin never reads or writes the data folder itself.
 
+Needs the [`journal`](https://github.com/apodacaa/journal) CLI, 0.1.0 or later, on your PATH.
+[CHANGELOG.md](CHANGELOG.md) lists what changed in each version.
+
 ## Install (lazy.nvim, local)
 
 ```lua

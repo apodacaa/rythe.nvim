@@ -41,6 +41,8 @@ lua/journal/pickers.lua   snacks pickers: entries, search, tags, on this day
 lua/journal/read.lua      read-only buffer rendering a stretch of entries; weekly review
 tests/                    plenary busted specs, run headless
 bin/test                  runs the tests
+bin/release               tag and publish the version main is at
+CHANGELOG.md              what changed in each version
 ```
 
 ## Tests
@@ -66,3 +68,20 @@ it runs whatever branch is checked out there. Keep that repo on `main` when not 
 - Milestones: M0 scaffold; M1 write and find (`<leader>jj`, `<leader>jf`); M2 search, tags, on
   this day (`<leader>js`, `<leader>jt`, `<leader>jo`); M3 reflect (`<leader>jr` read the week,
   `<leader>jp` prompted entry, `<leader>jR` weekly review).
+
+## Versions and releases
+
+lazy.nvim follows the tip of `main` unless a spec pins a version, so **`main` always equals a
+released version**.
+
+- The version is `M.version` in `lua/journal/init.lua`.
+- A PR that changes anything a user can see bumps it and adds an entry at the top of
+  `CHANGELOG.md`, in that same PR. A spec fails if the two disagree. Changes nobody outside can
+  see (tests, this file) don't bump it.
+- Semantic versioning. Before 1.0.0 a breaking change bumps the minor number. From 1.0.0 on, the
+  keymaps and the `setup()` options are frozen: breaking one is a new major version.
+- The README names the lowest `journal` version the plugin needs. Raise it when the plugin starts
+  using something newer, after the CLI release that has it.
+- After the PR merges, `bin/release` on an up-to-date `main` runs `bin/test`, tags `v<version>`,
+  pushes the tag and creates the GitHub release from the changelog entry. `bin/release --dry-run`
+  checks everything and publishes nothing. Tagging is the user's call, like merging.
