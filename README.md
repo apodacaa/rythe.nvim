@@ -88,3 +88,7 @@ bin/test tests/cli_spec.lua
 ```
 
 They run headless against a temp `JOURNAL_DIR`, never the real journal.
+
+## Licence
+
+MIT. See [LICENSE](LICENSE).
