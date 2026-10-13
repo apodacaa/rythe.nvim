@@ -60,7 +60,7 @@ it runs whatever branch is checked out there. Keep that repo on `main` when not 
 
 ## Working here
 
-- Git: GitHub `apodacaa/rythe.nvim` (private). Work lands on `main` through a PR: one
+- Git: GitHub `apodacaa/rythe.nvim` (public). Work lands on `main` through a PR: one
   branch per milestone (`m2-search-tags`, …), push, `gh pr create`. The user decides when to
   merge. Don't commit straight to `main`. A CLI fix goes to the CLI repo (`~/Work/journal/cli`,
   GitHub, also PRs) as its own PR, and it merges before the plugin PR that needs it.
