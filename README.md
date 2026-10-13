@@ -1,25 +1,48 @@
 # journal.nvim
 
-Write, find and reread the `journal` from inside LazyVim. Everything goes through the `journal`
+Write, find and reread the `journal` from inside Neovim (built for LazyVim). Everything goes through the `journal`
 CLI (`journal … --json`). The plugin never reads or writes the data folder itself.
 
-Needs the [`journal`](https://github.com/apodacaa/journal) CLI, 0.1.0 or later, on your PATH.
 [CHANGELOG.md](CHANGELOG.md) lists what changed in each version.
 
-## Install (lazy.nvim, local)
+## Requirements
+
+- Neovim 0.10 or later.
+- The [`journal`](https://github.com/apodacaa/journal) CLI, 0.1.0 or later, on your PATH. The
+  plugin is only a view of it: the CLI is the journal, and it is not installed with the plugin.
+  With [uv](https://docs.astral.sh/uv/):
+
+  ```
+  uv tool install git+https://github.com/apodacaa/journal
+  ```
+
+- [snacks.nvim](https://github.com/folke/snacks.nvim) with its picker enabled, for finding,
+  searching and tags. LazyVim has it already.
+- Optional: [which-key.nvim](https://github.com/folke/which-key.nvim) names the `<leader>j` group,
+  and a markdown renderer such as render-markdown.nvim styles the entries, which are markdown
+  buffers.
+
+Without the CLI every key answers "the journal CLI isn't installed".
+
+## Install
+
+With [lazy.nvim](https://github.com/folke/lazy.nvim):
 
 ```lua
 -- ~/.config/nvim/lua/plugins/journal.lua
 return {
   {
-    dir = "~/Work/journal/nvim",
+    "apodacaa/journal-nvim-plugin",
     name = "journal.nvim",
+    main = "journal",
     dependencies = { "folke/snacks.nvim" },
     event = "VeryLazy",
     opts = {},
   },
 }
 ```
+
+To work on the plugin from a clone, replace the first line with `dir = "~/path/to/the/clone"`.
 
 Options (defaults shown):
 

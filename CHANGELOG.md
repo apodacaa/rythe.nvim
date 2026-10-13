@@ -4,6 +4,11 @@ What changed in each version, newest first. The version is `require("journal").v
 follow [semantic versioning](https://semver.org): from 1.0.0 on, a change that breaks a keymap or
 a `setup()` option is a new major version.
 
+## 0.1.1
+
+- A missing `journal` CLI is reported as "the journal CLI isn't installed", not as a system error.
+- The README has requirements and an install from GitHub.
+
 ## 0.1.0
 
 The first tagged version. Needs `journal` 0.1.0 or later.
