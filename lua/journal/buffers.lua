@@ -86,16 +86,19 @@ function M.new()
 end
 
 -- Opens an entry by any ref the CLI takes (id, `last`, `today`, a unique prefix).
+-- Returns true if it did.
 function M.open(ref)
   local entry, err = cli.json({ "show", ref })
   if not entry then
-    return cli.notify(err)
+    cli.notify(err)
+    return false
   end
   local name = PREFIX .. entry.id
   if vim.fn.bufloaded(name) == 0 then
     fetched[entry.id] = entry
   end
   vim.cmd.edit(vim.fn.fnameescape(name))
+  return true
 end
 
 return M

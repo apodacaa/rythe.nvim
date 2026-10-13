@@ -32,7 +32,7 @@ cross-editor or other-user concern.
 lua/journal/init.lua      setup(opts), keymaps, which-key group
 lua/journal/cli.lua       run `journal` via vim.system, decode JSON, errors
 lua/journal/buffers.lua   journal://new and journal://<id> buffers (BufReadCmd/BufWriteCmd)
-lua/journal/pickers.lua   snacks picker sources                             (M1, M2)
+lua/journal/pickers.lua   snacks pickers: entries, search, tags, on this day
 lua/journal/read.lua      read-only buffer rendering a stretch of entries   (M3)
 tests/                    plenary busted specs, run headless
 bin/test                  runs the tests
@@ -54,9 +54,8 @@ it runs whatever branch is checked out there. Keep that repo on `main` when not 
 
 - Git: GitHub `apodacaa/journal-nvim-plugin` (private). Work lands on `main` through a PR: one
   branch per milestone (`m2-search-tags`, …), push, `gh pr create`. The user decides when to
-  merge. Don't commit straight to `main`. The journal CLI repo (`~/Work/journal`) is still local
-  only, so a CLI fix there is a local branch the user merges, and it merges before the plugin PR
-  that needs it.
+  merge. Don't commit straight to `main`. A CLI fix goes to the journal repo (`~/Work/journal`,
+  GitHub, also PRs) as its own PR, and it merges before the plugin PR that needs it.
 - Changes to `~/.config/nvim` are logged in `~/Work/omarchy/changes.md` (newest first, What /
   Why / Undo), via a branch and PR in the omarchy repo.
 - Milestones: M0 scaffold; M1 write and find (`<leader>jj`, `<leader>jf`); M2 search, tags, on

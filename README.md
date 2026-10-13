@@ -37,9 +37,9 @@ Everything is under the `<leader>j` which-key group "journal".
 |---|---|---|
 | `<leader>jj` | new entry; `:w` saves it | ✓ |
 | `<leader>jf` | find an entry (picker with preview) | ✓ |
-| `<leader>js` | search text | M2 |
-| `<leader>jt` | tags, then their entries | M2 |
-| `<leader>jo` | on this day | M2 |
+| `<leader>js` | search text | ✓ |
+| `<leader>jt` | tags, then their entries | ✓ |
+| `<leader>jo` | on this day | ✓ |
 | `<leader>jr` | read the last week | M3 |
 | `<leader>jp` | new entry with a writing prompt | M3 |
 | `<leader>jR` | weekly review | M3 |
@@ -52,6 +52,16 @@ the buffer is renamed to the new id), and `:e!` reloads from the CLI. You can al
 `:e journal://<id>` directly. Only the body is in the buffer, never the frontmatter. Writing an
 empty buffer is refused by the CLI and the buffer stays modified. `<leader>jj` returns to an
 unsaved `journal://new` draft if there is one.
+
+## Pickers
+
+- `<leader>jf`: every entry, newest first: date, title (or first line), tags; the body is the
+  preview.
+- `<leader>js`: asks for text, then lists the entries that contain it with the first matching
+  line (`+N` when more lines match). Opening one puts the cursor on the first match and sets the
+  search register, so `n` and `N` move between matches.
+- `<leader>jt`: tags with counts, most used first. Choosing one lists its entries.
+- `<leader>jo`: entries written on today's date in earlier years.
 
 ## Tests
 

@@ -41,3 +41,128 @@ describe("entries picker", function()
     assert.are.equal("no entries yet", notes[#notes].msg)
   end)
 end)
+
+-- Waits for the picker to have `n` items, then confirms the first.
+local function confirm(picker, n)
+  vim.wait(2000, function()
+    return picker:count() == n
+  end)
+  assert.are.equal(n, picker:count())
+  picker:action("confirm")
+end
+
+local function wait_for_buf(name)
+  vim.wait(2000, function()
+    return vim.api.nvim_buf_get_name(0) == name
+  end)
+  assert.are.equal(name, vim.api.nvim_buf_get_name(0))
+end
+
+describe("search picker", function()
+  local notes
+
+  before_each(function()
+    notes = helpers.capture_notify()
+    vim.cmd("silent! %bwipeout!")
+    require("journal").setup({})
+    helpers.temp_journal()
+  end)
+
+  it("lists matching entries with the first matching line and how many more", function()
+    helpers.seed("2026-09-29T09:00:00", "no match here")
+    helpers.seed("2026-09-30T16:46:08", "intro\nCoffee with Sam\nmore coffee later")
+    local items = pickers.search_items(require("journal.cli").json({ "search", "coffee" }))
+    assert.are.equal(1, #items)
+    assert.are.equal("Coffee with Sam", items[1].summary)
+    assert.are.equal("+1", items[1].extra)
+    assert.are.equal("2026-09-30 16:46", items[1].when)
+  end)
+
+  it("opens the entry on the first match with the search register set", function()
+    local id = helpers.seed("2026-09-30T16:46:08", "intro\nfirst line\nCoffee with Sam")
+    confirm(pickers.search("coffee"), 1)
+    wait_for_buf("journal://" .. id)
+    assert.are.equal(3, vim.fn.line("."))
+    assert.are.equal(1, vim.fn.search(vim.fn.getreg("/"), "n") > 0 and 1 or 0)
+    assert.are.equal("\\V\\ccoffee", vim.fn.getreg("/"))
+  end)
+
+  it("previews the body through journal show", function()
+    helpers.seed("2026-09-30T16:46:08", "intro\nCoffee with Sam")
+    local picker = pickers.search("coffee")
+    vim.wait(2000, function()
+      return picker:count() == 1 and picker.preview.win.buf ~= nil
+        and vim.api.nvim_buf_get_lines(picker.preview.win.buf, 0, -1, false)[2] == "Coffee with Sam"
+    end)
+    assert.are.same({ "intro", "Coffee with Sam" }, vim.api.nvim_buf_get_lines(picker.preview.win.buf, 0, 2, false))
+    picker:close()
+  end)
+
+  it("says so when nothing matches", function()
+    helpers.seed("2026-09-30T16:46:08", "hello")
+    assert.is_nil(pickers.search("zebra"))
+    assert.are.equal("nothing matches zebra", notes[#notes].msg)
+  end)
+end)
+
+describe("tags picker", function()
+  local notes
+
+  before_each(function()
+    notes = helpers.capture_notify()
+    vim.cmd("silent! %bwipeout!")
+    require("journal").setup({})
+    helpers.temp_journal()
+  end)
+
+  it("orders tags by count, then name", function()
+    local items = pickers.tag_items({ b = 1, a = 1, top = 5 })
+    assert.are.same({ "top", "a", "b" }, vim.tbl_map(function(i)
+      return i.tag
+    end, items))
+  end)
+
+  it("choosing a tag lists only its entries, and choosing one opens it", function()
+    helpers.seed("2026-09-29T09:00:00", "other #work")
+    local id = helpers.seed("2026-09-30T16:46:08", "tagged #idea")
+    confirm(pickers.tags(), 2) -- equal counts sort by name, so #idea is first
+    local entries
+    vim.wait(2000, function()
+      entries = Snacks.picker.get({ source = nil })
+      return #entries > 0 and entries[1].opts.title == "Journal #idea"
+    end)
+    assert.are.equal("Journal #idea", entries[1].opts.title)
+    confirm(entries[1], 1)
+    wait_for_buf("journal://" .. id)
+  end)
+
+  it("says so when there are no tags", function()
+    helpers.seed("2026-09-30T16:46:08", "untagged")
+    assert.is_nil(pickers.tags())
+    assert.are.equal("no tags yet", notes[#notes].msg)
+  end)
+end)
+
+describe("on this day picker", function()
+  local notes
+
+  before_each(function()
+    notes = helpers.capture_notify()
+    vim.cmd("silent! %bwipeout!")
+    require("journal").setup({})
+    helpers.temp_journal()
+  end)
+
+  it("lists entries from today's date in earlier years", function()
+    local year = tonumber(os.date("%Y"))
+    local id = helpers.seed(("%d-%s"):format(year - 1, os.date("%m-%dT08:00:00")), "a year ago")
+    helpers.seed(("%d-%s"):format(year - 1, os.date("%m-%dT08:00:00", os.time() - 86400 * 3)), "not today")
+    confirm(pickers.on_this_day(), 1)
+    wait_for_buf("journal://" .. id)
+  end)
+
+  it("says so when there's nothing", function()
+    assert.is_nil(pickers.on_this_day())
+    assert.are.equal("nothing on this day in other years", notes[#notes].msg)
+  end)
+end)
