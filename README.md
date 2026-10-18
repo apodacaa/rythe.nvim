@@ -55,7 +55,7 @@ Point it at another journal the same way the CLI does, with `RYTHE_DIR` or
 
 ## Keys
 
-Everything is under the `<leader>j` which-key group "journal".
+Everything is under the `<leader>j` which-key group "rythe".
 
 | Key | Does | Status |
 |---|---|---|
@@ -68,7 +68,7 @@ Everything is under the `<leader>j` which-key group "journal".
 | `<leader>jp` | new entry with a writing prompt | ✓ |
 | `<leader>jR` | weekly review | ✓ |
 
-## Journal buffers
+## Buffers
 
 An entry opens as `rythe://<id>` and a new one as `rythe://new`. They're ordinary buffers:
 `:w` sends the text to `rythe edit <id> --stdin` (or `rythe new` for a new one, after which

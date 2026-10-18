@@ -87,13 +87,13 @@ end
 -- Every entry, newest first, with the body as preview.
 function M.entries()
   local entries = run({ "list" })
-  return entries and pick_entries(entries, "Journal", "no entries yet")
+  return entries and pick_entries(entries, "rythe", "no entries yet")
 end
 
 -- Entries with this tag.
 function M.tagged(tag)
   local entries = run({ "list", "--tag", tag })
-  return entries and pick_entries(entries, "Journal #" .. tag, "no entries tagged #" .. tag)
+  return entries and pick_entries(entries, "rythe #" .. tag, "no entries tagged #" .. tag)
 end
 
 -- Entries written on today's date in earlier years.
@@ -130,7 +130,7 @@ function M.tags()
     return info("no tags yet")
   end
   return Snacks.picker.pick({
-    title = "Journal tags",
+    title = "rythe tags",
     items = M.tag_items(counts),
     format = function(item)
       return { { ("%4d  "):format(item.count), "SnacksPickerComment" }, { item.text, "SnacksPickerLabel" } }
@@ -170,7 +170,7 @@ function M.prompt()
     }
   end
   return Snacks.picker.pick({
-    title = "Journal prompts",
+    title = "rythe prompts",
     items = items,
     format = function(item)
       return { { item.name, "SnacksPickerLabel" }, { "  " .. item.source, "SnacksPickerComment" } }
@@ -225,7 +225,7 @@ end
 -- the first match and sets the search register, so `n` finds the next.
 function M.search(query)
   if not query then
-    return vim.ui.input({ prompt = "Search journal: " }, function(input)
+    return vim.ui.input({ prompt = "Search rythe: " }, function(input)
       if input and vim.trim(input) ~= "" then
         M.search(vim.trim(input))
       end
@@ -239,7 +239,7 @@ function M.search(query)
     return info("nothing matches " .. query)
   end
   return Snacks.picker.pick({
-    title = "Journal: " .. query,
+    title = "rythe: " .. query,
     items = M.search_items(results),
     format = function(item)
       local ret = { { item.when, "SnacksPickerLabel" }, { "  " }, { item.summary } }

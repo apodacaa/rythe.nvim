@@ -1,7 +1,7 @@
 local M = {}
 
 -- Bumped together with CHANGELOG.md; `bin/release` tags it.
-M.version = "0.2.0"
+M.version = "0.2.1"
 
 M.config = {
   -- the rythe CLI to run
@@ -16,7 +16,7 @@ function M.setup(opts)
 
   local ok, wk = pcall(require, "which-key")
   if ok then
-    wk.add({ { "<leader>j", group = "journal" } })
+    wk.add({ { "<leader>j", group = "rythe" } })
   end
 
   local map = function(lhs, rhs, desc)
