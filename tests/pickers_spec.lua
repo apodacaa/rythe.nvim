@@ -129,9 +129,9 @@ describe("tags picker", function()
     local entries
     vim.wait(2000, function()
       entries = Snacks.picker.get({ source = nil })
-      return #entries > 0 and entries[1].opts.title == "Journal #idea"
+      return #entries > 0 and entries[1].opts.title == "rythe #idea"
     end)
-    assert.are.equal("Journal #idea", entries[1].opts.title)
+    assert.are.equal("rythe #idea", entries[1].opts.title)
     confirm(entries[1], 1)
     wait_for_buf("rythe://" .. id)
   end)

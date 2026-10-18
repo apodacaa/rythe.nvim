@@ -4,6 +4,12 @@ What changed in each version, newest first. The version is `require("rythe").ver
 follow [semantic versioning](https://semver.org): from 1.0.0 on, a change that breaks a keymap or
 a `setup()` option is a new major version.
 
+## 0.2.1
+
+The labels say rythe now, finishing the rename in 0.2.0: the `<leader>j` which-key group, the
+picker titles (`rythe`, `rythe #tag`, `rythe tags`, `rythe prompts`, `rythe: <query>`) and the
+search prompt. The keys themselves are unchanged.
+
 ## 0.2.0
 
 **Renamed from journal.nvim to rythe.nvim**, following the CLI, which is now `rythe` (a rythe is a
