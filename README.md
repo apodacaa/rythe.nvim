@@ -84,7 +84,6 @@ unsaved `rythe://new` draft if there is one.
   line (`+N` when more lines match). Opening one puts the cursor on the first match and sets the
   search register, so `n` and `N` move between matches.
 - `<leader>jt`: tags with counts, most used first. Choosing one lists its entries.
-- `<leader>jo`: entries written on today's date in earlier years.
 
 ## Reflect
 
