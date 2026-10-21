@@ -63,7 +63,6 @@ Everything is under the `<leader>j` which-key group "rythe".
 | `<leader>jf` | find an entry (picker with preview) | ✓ |
 | `<leader>js` | search text | ✓ |
 | `<leader>jt` | tags, then their entries | ✓ |
-| `<leader>jo` | on this day | ✓ |
 | `<leader>jr` | read the last week | ✓ |
 | `<leader>jp` | new entry with a writing prompt | ✓ |
 | `<leader>jR` | weekly review | ✓ |
@@ -76,10 +75,6 @@ the buffer is renamed to the new id), and `:e!` reloads from the CLI. You can al
 `:e rythe://<id>` directly. Only the body is in the buffer, never the frontmatter. Writing an
 empty buffer is refused by the CLI and the buffer stays modified. `<leader>jj` returns to an
 unsaved `rythe://new` draft if there is one.
-
-After saving a new entry you get the same reminder as on the terminal: a notification with one
-older entry (same day in a past year, else a month ago, else a week ago) and `:e rythe://<id>`
-to open it. Turn it off with `rythe config set resurface.enabled false`.
 
 ## Pickers
 

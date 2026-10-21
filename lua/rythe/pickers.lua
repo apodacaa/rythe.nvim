@@ -96,12 +96,6 @@ function M.tagged(tag)
   return entries and pick_entries(entries, "rythe #" .. tag, "no entries tagged #" .. tag)
 end
 
--- Entries written on today's date in earlier years.
-function M.on_this_day()
-  local entries = run({ "on-this-day" })
-  return entries and pick_entries(entries, "On this day", "nothing on this day in other years")
-end
-
 -- `tags --json` is an object, so its order is lost in Lua: most used first, then by name.
 function M.tag_items(counts)
   local items = {}

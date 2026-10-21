@@ -4,6 +4,15 @@ What changed in each version, newest first. The version is `require("rythe").ver
 follow [semantic versioning](https://semver.org): from 1.0.0 on, a change that breaks a keymap or
 a `setup()` option is a new major version.
 
+## 0.3.0
+
+**"On this day" is gone**, following `rythe` 0.3.0, which removed it (nothing in the journaling
+research shows that being shown old entries helps, and it can feed rumination). It still works
+with `rythe` 0.2.0 or later: an older CLI just has a command and a field the plugin no longer uses.
+
+- `<leader>jo` (On This Day) is removed.
+- Saving a new entry no longer pops up an older one.
+
 ## 0.2.1
 
 The labels say rythe now, finishing the rename in 0.2.0: the `<leader>j` which-key group, the
