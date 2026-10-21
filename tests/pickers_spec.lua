@@ -143,30 +143,6 @@ describe("tags picker", function()
   end)
 end)
 
-describe("on this day picker", function()
-  local notes
-
-  before_each(function()
-    notes = helpers.capture_notify()
-    vim.cmd("silent! %bwipeout!")
-    require("rythe").setup({})
-    helpers.temp_journal()
-  end)
-
-  it("lists entries from today's date in earlier years", function()
-    local year = tonumber(os.date("%Y"))
-    local id = helpers.seed(("%d-%s"):format(year - 1, os.date("%m-%dT08:00:00")), "a year ago")
-    helpers.seed(("%d-%s"):format(year - 1, os.date("%m-%dT08:00:00", os.time() - 86400 * 3)), "not today")
-    confirm(pickers.on_this_day(), 1)
-    wait_for_buf("rythe://" .. id)
-  end)
-
-  it("says so when there's nothing", function()
-    assert.is_nil(pickers.on_this_day())
-    assert.are.equal("nothing on this day in other years", notes[#notes].msg)
-  end)
-end)
-
 describe("prompt picker", function()
   before_each(function()
     helpers.capture_notify()

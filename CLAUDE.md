@@ -38,7 +38,7 @@ This repo lives in the `~/Work/journal` hub as `nvim/`, beside the CLI in `cli/`
 lua/rythe/init.lua      setup(opts), keymaps, which-key group
 lua/rythe/cli.lua       run `rythe` via vim.system, decode JSON, errors
 lua/rythe/buffers.lua   rythe://new, rythe://review, rythe://<id> buffers; prompt guide
-lua/rythe/pickers.lua   snacks pickers: entries, search, tags, on this day
+lua/rythe/pickers.lua   snacks pickers: entries, search, tags, prompts
 lua/rythe/read.lua      read-only buffer rendering a stretch of entries; weekly review
 tests/                    plenary busted specs, run headless
 bin/test                  runs the tests
@@ -66,8 +66,8 @@ it runs whatever branch is checked out there. Keep that repo on `main` when not 
   GitHub, also PRs) as its own PR, and it merges before the plugin PR that needs it.
 - Changes to `~/.config/nvim` are logged in `~/Work/omarchy/changes.md` (newest first, What /
   Why / Undo), via a branch and PR in the omarchy repo.
-- Milestones: M0 scaffold; M1 write and find (`<leader>jj`, `<leader>jf`); M2 search, tags, on
-  this day (`<leader>js`, `<leader>jt`, `<leader>jo`); M3 reflect (`<leader>jr` read the week,
+- Milestones: M0 scaffold; M1 write and find (`<leader>jj`, `<leader>jf`); M2 search and tags
+  (`<leader>js`, `<leader>jt`); M3 reflect (`<leader>jr` read the week,
   `<leader>jp` prompted entry, `<leader>jR` weekly review).
 
 ## Versions and releases

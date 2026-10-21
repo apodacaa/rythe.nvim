@@ -1,7 +1,7 @@
 local M = {}
 
 -- Bumped together with CHANGELOG.md; `bin/release` tags it.
-M.version = "0.2.1"
+M.version = "0.3.0"
 
 M.config = {
   -- the rythe CLI to run
@@ -32,9 +32,6 @@ function M.setup(opts)
   map("<leader>jt", function()
     require("rythe.pickers").tags()
   end, "Tags")
-  map("<leader>jo", function()
-    require("rythe.pickers").on_this_day()
-  end, "On This Day")
   map("<leader>jr", function()
     require("rythe.read").week()
   end, "Read the Week")
